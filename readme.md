@@ -1,18 +1,25 @@
-# Minimal API
+# Minimal API Login
 ![Badge em Desenvolvimento](https://img.shields.io/static/v1?label=STATUS&message=FINALIZADO&color=GREEN&style=for-the-badge)
 
 ## Introdução
-API Minimal tem por intuíto ser um projeto API com os recursos mínimos possíveis para execução do mesmo. As principais tecnologias utilizadas são:
+API Minimal Fornecendo serviço de login e geração de token JWT caso usuário seja validado. 
 
-* C#
-* API
+### Tecnologias Utilizadas:
+* .NET
+* Minimal API
+* JWT
 * Swagger
+
+## O que é Minimal API?
+A Minimal API foca em simplicidade e performance, evitando a necessidade de overhead de controladores e ações como em uma aplicação ASP.NET Core MVC completa.
+O código é mais direto e fácil de entender, o que facilita a manutenção.
 
 ## Caminhos de Acesso aos Dados da API
 Abaixo estão os endpoints para acessar os dados da API quando a mesma estiver em execução:
 
-- **?**: `http://localhost:7210/api/?`
-- **?: `http://localhost:7210/api/?`
+- **Login**: `https://localhost:7210/login`</br>
+POST login raw/JSON {"email": "admin@teste.com", "senha": "123"}
+RETURN Token JWT
 
 ## Configuração e Execução
 Para executar este projeto localmente, siga os passos abaixo:
