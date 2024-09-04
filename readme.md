@@ -2,7 +2,8 @@
 ![Badge em Desenvolvimento](https://img.shields.io/static/v1?label=STATUS&message=FINALIZADO&color=GREEN&style=for-the-badge)
 
 ## Introdução
-API Minimal Fornecendo serviço de login e geração de token JWT caso usuário seja validado. 
+API Minimal Fornecendo serviço de login e geração de token JWT caso usuário seja validado.
+Após o login efetuado é possível realizar novas requisições utilizando o token.
 
 ### Tecnologias Utilizadas:
 * .NET

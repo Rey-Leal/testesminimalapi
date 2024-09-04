@@ -37,8 +37,8 @@ namespace MinimalAPI.Services
                         new Claim(ClaimTypes.Name, login.Email)
                     }),
                         Expires = DateTime.UtcNow.AddMinutes(double.Parse(_configuration["Jwt:ExpireMinutes"])),
-                        Issuer = _configuration["Jwt:Issuer"],
-                        Audience = _configuration["Jwt:Audience"],
+                        //Issuer = _configuration["Jwt:Issuer"],
+                        //Audience = _configuration["Jwt:Audience"],
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                     };
                     var token = tokenHandler.CreateToken(tokenDescriptor);

@@ -1,50 +1,54 @@
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using Microsoft.EntityFrameworkCore;
-using MinimalAPI.Data;
-using MinimalAPI.Models;
-using MinimalAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
+using MinimalAPI.Data;
+using MinimalAPI.Models;
+using MinimalAPI.Services;
+using MinimalAPI.ViewModels;
+
+#region Builder
 var builder = WebApplication.CreateBuilder(args);
 
 // Context 
 builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Context") ?? throw new InvalidOperationException("Connection string 'Context' not found.")));
 
+// Controllers
 builder.Services.AddControllersWithViews();
 
-// Serviços
-builder.Services.AddScoped<LoginService>();
+// Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-// Autenticação JWT
+// My Services
+builder.Services.AddScoped<LoginService>();
+builder.Services.AddScoped<UsuarioService>();
+
+// Autenticação e Autorização JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = true,
-            ValidateAudience = true,
+            //ValidateIssuer = true,
+            //ValidateAudience = true,
             ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
+            //ValidateIssuerSigningKey = true,
+            //ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            //ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
     });
-
-// Autorização JWT
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+#endregion
 
-// Middlewares
-app.UseAuthentication();
-app.UseAuthorization();
-
-// Cultura padrão pt-BR
+#region Cultura
 var defaultCulture = new CultureInfo("pt-BR");
 var localizationOptions = new RequestLocalizationOptions
 {
@@ -52,25 +56,44 @@ var localizationOptions = new RequestLocalizationOptions
     SupportedCultures = new[] { defaultCulture },
     SupportedUICultures = new[] { defaultCulture }
 };
+#endregion
 
-// Configurações de localização
-app.UseRequestLocalization(localizationOptions);
+#region Rotas
+// Default
+app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 
-// Rota inicial
-app.MapGet("/", () => "Minimal API em execução");
-
-// POST login - Valida acesso e retorna token
+// POST/login - Valida acesso e retorna token
 app.MapPost("/login", async (Login login, LoginService loginService) =>
 {
-    var token = await loginService.RealizaLogin(login);
-    return token is null ? Results.Unauthorized() : Results.Ok(new { Token = token });
-});
+    if (login != null)
+    {
+        var token = await loginService.RealizaLogin(login);
+        return token is null ?
+            Results.Unauthorized() :
+            Results.Ok(new LogadoViewModel
+            {
+                Email = login.Email,
+                Token = token
+            });
+    }
+    return Results.Unauthorized();
 
-// GET usuarios - Retorna lista de usuarios apenas se token for válido
-app.MapGet("/usuario", async () =>
+}).WithTags("Login");
+
+// Rotas Autenticadas - Acesso permitido apenas com token válido
+// GET/usuarios - Retorna lista de usuários
+app.MapGet("/usuario", async (UsuarioService usuarioService) =>
 {
-    // TODO
-});
+    var usuarios = await usuarioService.ListaUsuarios();
+    return Results.Ok(usuarios);
+}).RequireAuthorization().WithTags("Usuário");
+#endregion
+
+// Middlewares
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseSwagger();
+app.UseSwaggerUI();
+app.UseRequestLocalization(localizationOptions);
 
 app.Run();
-
