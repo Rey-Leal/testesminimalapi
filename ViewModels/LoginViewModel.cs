@@ -1,8 +1,8 @@
 ﻿namespace MinimalAPI.ViewModels
 {
-    public class LogadoViewModel
+    public class LoginViewModel
     {
         public string Email { get; set; } = default!;
-        public string Token { get; set; } = default!;
+        public string Senha { get; set; } = default!;
     }
 }

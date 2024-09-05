@@ -2,15 +2,15 @@
 ![Badge em Desenvolvimento](https://img.shields.io/static/v1?label=STATUS&message=FINALIZADO&color=GREEN&style=for-the-badge)
 
 ## Introdução
-API Minimal Fornecendo serviço de login e geração de token JWT caso usuário seja validado.
-
-Após o login efetuado é possível realizar novas requisições apenas utilizando o token.
+API Minimal Fornecendo serviço de login e geração de token JWT. Após o login efetuado é possível realizar novas requisições apenas utilizando o token gerado.
+Persistência de dados utilizando SQL Server e o Entity Framework.
 
 ### Tecnologias Utilizadas:
 * .NET
 * Minimal API
 * JWT
 * Swagger
+* Entity Framework
 
 ## O que é Minimal API?
 A Minimal API foca em simplicidade e performance, evitando a necessidade de overhead de controladores e ações como em uma aplicação ASP.NET Core MVC completa.
