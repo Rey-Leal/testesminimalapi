@@ -3,7 +3,8 @@
 
 ## Introdução
 API Minimal Fornecendo serviço de login e geração de token JWT caso usuário seja validado.
-Após o login efetuado é possível realizar novas requisições utilizando o token.
+
+Após o login efetuado é possível realizar novas requisições apenas utilizando o token.
 
 ### Tecnologias Utilizadas:
 * .NET
@@ -16,11 +17,9 @@ A Minimal API foca em simplicidade e performance, evitando a necessidade de over
 O código é mais direto e fácil de entender, o que facilita a manutenção.
 
 ## Caminhos de Acesso aos Dados da API
-Abaixo estão os endpoints para acessar os dados da API quando a mesma estiver em execução:
+Os endpoints para acessar a API estarão disponíveis em:
 
-- **Login**: `https://localhost:7210/login`</br>
-POST login raw/JSON {"email": "admin@teste.com", "senha": "123"}
-RETURN Token JWT
+- **Swagger**: `https://localhost:7210/swagger`</br>
 
 ## Configuração e Execução
 Para executar este projeto localmente, siga os passos abaixo:

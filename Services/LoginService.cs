@@ -19,7 +19,7 @@ namespace MinimalAPI.Services
             _configuration = configuration;
         }
 
-        public async Task<string?> RealizaLogin(Login login)
+        public async Task<string> RealizaLogin(Login login)
         {
             var usuario = await _context.Usuario.FirstOrDefaultAsync(e => e.Email == login.Email);
 
@@ -34,11 +34,11 @@ namespace MinimalAPI.Services
                     {
                         Subject = new ClaimsIdentity(new[]
                         {
-                        new Claim(ClaimTypes.Name, login.Email)
-                    }),
+                            new Claim(ClaimTypes.Name, login.Email)
+                        }),
                         Expires = DateTime.UtcNow.AddMinutes(double.Parse(_configuration["Jwt:ExpireMinutes"])),
-                        //Issuer = _configuration["Jwt:Issuer"],
-                        //Audience = _configuration["Jwt:Audience"],
+                        Issuer = _configuration["Jwt:Issuer"],
+                        Audience = _configuration["Jwt:Audience"],
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                     };
                     var token = tokenHandler.CreateToken(tokenDescriptor);
