@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Annotations;
 
 using MinimalAPI.Data;
 using MinimalAPI.Models;
@@ -13,6 +14,7 @@ namespace MinimalAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [SwaggerTag("Endpoints relacionados à autenticação e geração de Token.")]
     public class AuthenticationController : ControllerBase
     {
         private readonly Context _context;
@@ -25,6 +27,7 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpPost, Route("login")]
+        [SwaggerOperation(Summary = "Realiza login", Description = "Realiza login e gera um token JWT como retorno, que deve ser utilizado em Authorizathion para acesso aos demais endpoints.")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel login)
         {
             // Valida login

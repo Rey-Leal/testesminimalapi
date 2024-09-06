@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 
 using MinimalAPI.Data;
 using MinimalAPI.Models;
@@ -8,9 +9,8 @@ using MinimalAPI.ViewModels;
 
 namespace MinimalAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    [Authorize]
+    [ApiController, Authorize, Route("api/[controller]")]
+    [SwaggerTag("Endpoints relacionados à gestão de grupos. Inclui cadastro, consulta, edição e exclusão de grupos.")]
     public class GrupoController : ControllerBase
     {
         private readonly Context _context;
@@ -23,6 +23,7 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpGet, Authorize]
+        [SwaggerOperation(Summary = "Lista todos grupos", Description = "Retorna a lista de todos grupos cadastrados.")]
         public async Task<IActionResult> GetGrupos()
         {
             var grupos = await _context.Grupo.ToListAsync();
@@ -34,6 +35,7 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpGet, Authorize, Route("{id}")]
+        [SwaggerOperation(Summary = "Lista grupo por id", Description = "Retorna grupo por id consultado.")]
         public async Task<IActionResult> GetGrupo(int? id)
         {
             var grupo = await _context.Grupo.FirstOrDefaultAsync(u => u.Id == id);
@@ -45,6 +47,7 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation(Summary = "Cadastra grupo", Description = "Realiza cadastro de um novo grupo.")]
         public async Task<IActionResult> PostGrupo(Grupo grupo)
         {
             _context.Grupo.Add(grupo);
@@ -53,6 +56,7 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpPut, Authorize]
+        [SwaggerOperation(Summary = "Altera grupo", Description = "Altera cadastro de um grupo.")]
         public async Task<IActionResult> PutGrupo(Grupo grupo)
         {
             _context.Grupo.Update(grupo);
@@ -61,6 +65,7 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpDelete, Authorize, Route("{id}")]
+        [SwaggerOperation(Summary = "Deleta grupo", Description = "Deleta cadastro de um grupo.")]
         public async Task<IActionResult> DeleteGrupo(int? id)
         {
             var grupo = await _context.Grupo.FirstOrDefaultAsync(u => u.Id == id);

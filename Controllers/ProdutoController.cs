@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 
 using MinimalAPI.Data;
 using MinimalAPI.Models;
@@ -8,9 +9,8 @@ using MinimalAPI.ViewModels;
 
 namespace MinimalAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    [Authorize]
+    [ApiController, Authorize, Route("api/[controller]")]
+    [SwaggerTag("Endpoints relacionados à gestão de produtos. Inclui cadastro, consulta, edição e exclusão de produtos.")]
     public class ProdutoController : ControllerBase
     {
         private readonly Context _context;
@@ -23,6 +23,7 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpGet, Authorize]
+        [SwaggerOperation(Summary = "Lista todos produtos", Description = "Retorna a lista de todos produtos cadastrados.")]
         public async Task<IActionResult> GetProdutos()
         {
             var produtos = await _context.Produto.ToListAsync();
@@ -34,6 +35,7 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpGet, Authorize, Route("{id}")]
+        [SwaggerOperation(Summary = "Lista produto por id", Description = "Retorna produto por id consultado.")]
         public async Task<IActionResult> GetProduto(int? id)
         {
             var produto = await _context.Produto.FirstOrDefaultAsync(u => u.Id == id);
@@ -45,6 +47,7 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation(Summary = "Cadastra produto", Description = "Realiza cadastro de um novo produto.")]
         public async Task<IActionResult> PostProduto(Produto produto)
         {
             _context.Produto.Add(produto);
@@ -53,6 +56,7 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpPut, Authorize]
+        [SwaggerOperation(Summary = "Altera produto", Description = "Altera cadastro de um produto.")]
         public async Task<IActionResult> PutProduto(Produto produto)
         {
             _context.Produto.Update(produto);
@@ -61,6 +65,7 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpDelete, Authorize, Route("{id}")]
+        [SwaggerOperation(Summary = "Deleta produto", Description = "Deleta cadastro de um produto.")]
         public async Task<IActionResult> DeleteProduto(int? id)
         {
             var produto = await _context.Produto.FirstOrDefaultAsync(u => u.Id == id);
