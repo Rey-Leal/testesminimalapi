@@ -25,15 +25,14 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpPost, Route("login")]
-        public IActionResult Login([FromBody] LoginViewModel login)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel login)
         {
-            // Ativar para validar login efetivamente - trecho comentado apenas para testar sem precisar de logar 
-            //var usuario = await _context.Usuario.FirstOrDefaultAsync(e => e.Email == login.Email && e.Senha == login.Senha);
-            var usuario = "logado_para_teste";
+            // Valida login
+            var usuario = await _context.Usuario.FirstOrDefaultAsync(e => e.Email == login.Email && e.Senha == login.Senha);
 
             if (usuario != null)
             {
-                // Gerar token
+                // Gera token
                 var _secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
                 var _issuer = _config["Jwt:Issuer"];
                 var _audience = _config["Jwt:Audience"];
