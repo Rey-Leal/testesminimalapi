@@ -81,8 +81,8 @@ namespace TestesMinimalAPI
                     Scheme = "Bearer",
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "Insira seu token JWT usando Bearer\r\n\r\n" +
-                    "Bearer [space] {token}\r\n\r\n",
+                    Description = "Insira seu token JWT\n" +
+                    "Bearer [space] {token}\n",
                 });
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {

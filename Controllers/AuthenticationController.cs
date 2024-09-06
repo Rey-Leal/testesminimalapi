@@ -27,7 +27,7 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpPost, Route("login")]
-        [SwaggerOperation(Summary = "Realiza login", Description = "Realiza login e gera um token JWT como retorno, que deve ser utilizado em Authorizathion para acesso aos demais endpoints.")]
+        [SwaggerOperation(Summary = "Realiza login", Description = "Realiza login e gera um token JWT como retorno, que deve ser utilizado em [Authorize] para acesso aos demais endpoints da API.")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel login)
         {
             // Valida login
@@ -52,7 +52,12 @@ namespace MinimalAPI.Controllers
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
 
-                return Ok(new { Token = tokenString });
+                return Ok(new
+                {
+                    Token = tokenString,
+                    ajuda = "Acesso via Swagger: informe o Token acima em [Authorize] com o seguinte formato:",
+                    formato = "Bearer [space] {token}"
+                });
             }
             else
             {
