@@ -32,6 +32,8 @@ namespace MinimalAPI.Controllers
             return new ObjectResult(usuarios);
         }
 
+        //GET usuarios por nome
+
         [HttpGet, Authorize, Route("{id}")]
         public async Task<IActionResult> GetUsuario(int? id)
         {
