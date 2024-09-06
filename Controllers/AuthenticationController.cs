@@ -54,9 +54,9 @@ namespace MinimalAPI.Controllers
 
                 return Ok(new
                 {
-                    Token = tokenString,
                     ajuda = "Acesso via Swagger: informe o Token acima em [Authorize] com o seguinte formato:",
-                    formato = "Bearer [space] {token}"
+                    formato = "Bearer [space] {token}",
+                    token = tokenString                    
                 });
             }
             else

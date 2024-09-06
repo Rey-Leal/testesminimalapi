@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace MinimalAPI.Models
 {
@@ -40,6 +41,7 @@ namespace MinimalAPI.Models
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true), Display(Name = "Quantidade")]
         public decimal Quantidade { get; set; }
 
+        [JsonIgnore]
         public virtual Grupo? Grupo { get; set; } = null!; // Referência de navegação do pai
     }
 }

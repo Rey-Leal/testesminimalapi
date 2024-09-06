@@ -6,6 +6,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using MinimalAPI.Data;
 using MinimalAPI.Models;
 using MinimalAPI.ViewModels;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MinimalAPI.Controllers
 {
@@ -27,14 +28,12 @@ namespace MinimalAPI.Controllers
         public async Task<IActionResult> GetUsuarios()
         {
             var usuarios = await _context.Usuario.ToListAsync();
-            if (usuarios == null)
+            if (usuarios.IsNullOrEmpty())
             {
                 return NotFound();
             }
             return new ObjectResult(usuarios);
         }
-
-        //GET usuarios por nome
 
         [HttpGet, Authorize, Route("{id}")]
         [SwaggerOperation(Summary = "Lista usuário por id", Description = "Retorna usuário por id consultado.")]
@@ -46,6 +45,18 @@ namespace MinimalAPI.Controllers
                 return NotFound();
             }
             return new ObjectResult(usuario);
+        }
+
+        [HttpGet, Authorize, Route("nome/{nome}")]
+        [SwaggerOperation(Summary = "Lista usuários por nome", Description = "Retorna lista de usuários que contenham parte do nome buscado.")]
+        public async Task<IActionResult> GetUsuarioPorNome(string? nome)
+        {
+            var usuarios = await _context.Usuario.Where(u => u.Nome.Contains(nome)).ToListAsync();
+            if (usuarios.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+            return new ObjectResult(usuarios);
         }
 
         [HttpPost]

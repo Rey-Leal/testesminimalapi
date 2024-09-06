@@ -3,7 +3,10 @@
 
 ## Introdução
 API completa fornecendo serviço de login e geração de token JWT. Após o login efetuado é possível realizar novas requisições apenas utilizando o token gerado.
+
 Persistência de dados utilizando SQL Server e o Entity Framework.
+
+Interface Swagger para auxílio do uso da API.
 
 ### Tecnologias Utilizadas:
 * .NET

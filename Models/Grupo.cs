@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace MinimalAPI.Models
 {
@@ -28,6 +29,7 @@ namespace MinimalAPI.Models
         [Required, StringLength(1), Display(Name = "Tipo")]
         public string Tipo { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Produto> Produtos { get; set; } = new List<Produto>(); // Coleção de navegação filha
     }
 }

@@ -6,6 +6,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using MinimalAPI.Data;
 using MinimalAPI.Models;
 using MinimalAPI.ViewModels;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MinimalAPI.Controllers
 {
@@ -27,7 +28,7 @@ namespace MinimalAPI.Controllers
         public async Task<IActionResult> GetProdutos()
         {
             var produtos = await _context.Produto.ToListAsync();
-            if (produtos == null)
+            if (produtos.IsNullOrEmpty())
             {
                 return NotFound();
             }

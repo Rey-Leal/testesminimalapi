@@ -6,6 +6,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using MinimalAPI.Data;
 using MinimalAPI.Models;
 using MinimalAPI.ViewModels;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MinimalAPI.Controllers
 {
@@ -27,7 +28,7 @@ namespace MinimalAPI.Controllers
         public async Task<IActionResult> GetGrupos()
         {
             var grupos = await _context.Grupo.ToListAsync();
-            if (grupos == null)
+            if (grupos.IsNullOrEmpty())
             {
                 return NotFound();
             }
