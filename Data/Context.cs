@@ -10,6 +10,8 @@ namespace MinimalAPI.Data
         {
         }
 
+        public DbSet<Grupo> Grupo { get; set; } = default!;
+        public DbSet<Produto> Produto { get; set; } = default!;
         public DbSet<Usuario> Usuario { get; set; } = default!;
     }
 }

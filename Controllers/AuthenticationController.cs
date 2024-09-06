@@ -18,10 +18,10 @@ namespace MinimalAPI.Controllers
         private readonly Context _context;
         private IConfiguration _config;
 
-        public AuthenticationController(Context context, IConfiguration Configuration)
+        public AuthenticationController(Context context, IConfiguration configuration)
         {
             _context = context;
-            _config = Configuration;
+            _config = configuration;
         }
 
         [HttpPost, Route("login")]

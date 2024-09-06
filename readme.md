@@ -2,7 +2,7 @@
 ![Badge em Desenvolvimento](https://img.shields.io/static/v1?label=STATUS&message=FINALIZADO&color=GREEN&style=for-the-badge)
 
 ## Introdução
-API fornecendo serviço de login e geração de token JWT. Após o login efetuado é possível realizar novas requisições apenas utilizando o token gerado.
+API completa fornecendo serviço de login e geração de token JWT. Após o login efetuado é possível realizar novas requisições apenas utilizando o token gerado.
 Persistência de dados utilizando SQL Server e o Entity Framework.
 
 ### Tecnologias Utilizadas:
