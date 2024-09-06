@@ -36,12 +36,12 @@ namespace TestesMinimalAPI
                         {
                             context.NoResult();
                             context.Response.StatusCode = 401;
-                            return context.Response.WriteAsync("Falha de autenticação: " + context.Exception.Message);
+                            return context.Response.WriteAsync($"Falha de autenticação!\n{context.Exception.Message}\n");
                         },
                         OnChallenge = context =>
                         {
                             context.HandleResponse();
-                            return context.Response.WriteAsync("Token inválido: " + context.ErrorDescription);
+                            return context.Response.WriteAsync($"Token inválido!\n{context.ErrorDescription}\n");
                         }
                     };
                     options.TokenValidationParameters = new TokenValidationParameters
