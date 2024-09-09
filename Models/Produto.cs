@@ -42,6 +42,6 @@ namespace MinimalAPI.Models
         public decimal Quantidade { get; set; }
 
         [JsonIgnore]
-        public virtual Grupo? Grupo { get; set; } = null!; // Referência de navegação do pai
+        public virtual Grupo Grupo { get; set; } = null!; // Referência de navegação do pai
     }
 }

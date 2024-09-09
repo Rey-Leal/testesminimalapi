@@ -9,6 +9,11 @@ namespace TestesMinimalAPI
 {
     public class Startup
     {
+        private const string ApiName = "MinimalAPI";
+        private const string ApiVersion = "v1";
+        private const string CorsPolicyName = "EnableCORS";
+        private const string JwtScheme = "Bearer";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -74,7 +79,7 @@ namespace TestesMinimalAPI
         {
             services.AddCors(options =>
             {
-                options.AddPolicy("EnableCORS", builder =>
+                options.AddPolicy(CorsPolicyName, builder =>
                 {
                     builder.AllowAnyOrigin()
                            .AllowAnyHeader()
@@ -93,14 +98,14 @@ namespace TestesMinimalAPI
             // Swagger Doc
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "MinimalAPI", Version = "v1" });
+                options.SwaggerDoc(ApiVersion, new OpenApiInfo { Title = ApiName, Version = ApiVersion });
                 options.EnableAnnotations();
                 // Entrada de Token
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                options.AddSecurityDefinition(JwtScheme, new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
+                    Scheme = JwtScheme,
                     BearerFormat = "JWT",
                     In = ParameterLocation.Header,
                     Description = "Insira seu token JWT\n" +
@@ -114,7 +119,7 @@ namespace TestesMinimalAPI
                               Reference = new OpenApiReference
                               {
                                   Type = ReferenceType.SecurityScheme,
-                                  Id = "Bearer"
+                                  Id = JwtScheme
                               }
                           },
                          new string[] { }
@@ -133,14 +138,14 @@ namespace TestesMinimalAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "MinimalAPI v1");
+                    c.SwaggerEndpoint($"/swagger/{ApiVersion}/swagger.json", $"{ApiName} {ApiVersion}");
                     c.RoutePrefix = string.Empty; // Swagger como página raiz
                 });
             }
 
             app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseCors("EnableCORS");
+            app.UseCors(CorsPolicyName);
             app.UseAuthentication();
             app.UseAuthorization();
 
