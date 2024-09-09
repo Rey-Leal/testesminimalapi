@@ -16,13 +16,25 @@ namespace TestesMinimalAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        #region Services
         public void ConfigureServices(IServiceCollection services)
+        {
+            ConfigureDatabase(services);
+            ConfigureAuthentication(services);
+            ConfigureCors(services);
+            ConfigureControllers(services);
+            ConfigureSwagger(services);
+        }
+
+        public void ConfigureDatabase(IServiceCollection services)
         {
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Context")
                 ?? throw new InvalidOperationException("Contexto não encontrado!")));
+        }
 
+        public void ConfigureAuthentication(IServiceCollection services)
+        {
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -56,7 +68,10 @@ namespace TestesMinimalAPI
                     };
                 });
             services.AddAuthorization();
+        }
 
+        public void ConfigureCors(IServiceCollection services)
+        {
             services.AddCors(options =>
             {
                 options.AddPolicy("EnableCORS", builder =>
@@ -66,14 +81,21 @@ namespace TestesMinimalAPI
                            .AllowAnyMethod();
                 });
             });
+        }
 
+        public void ConfigureControllers(IServiceCollection services)
+        {
             services.AddControllers();
+        }
 
-            // Swagger Doc e Entrada de Token
+        public void ConfigureSwagger(IServiceCollection services)
+        {
+            // Swagger Doc
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "MinimalAPI", Version = "v1" });
                 options.EnableAnnotations();
+                // Entrada de Token
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
@@ -100,8 +122,9 @@ namespace TestesMinimalAPI
                 });
             });
         }
+        #endregion
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        #region App
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -116,11 +139,8 @@ namespace TestesMinimalAPI
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseCors("EnableCORS");
-
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -129,5 +149,6 @@ namespace TestesMinimalAPI
                 endpoints.MapControllers();
             });
         }
+        #endregion
     }
 }
