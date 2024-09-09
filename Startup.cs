@@ -72,7 +72,7 @@ namespace TestesMinimalAPI
             // Swagger Doc e Entrada de Token
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "MinimalAPI", Version = "v1" });                
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "MinimalAPI", Version = "v1" });
                 options.EnableAnnotations();
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
