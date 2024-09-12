@@ -8,7 +8,7 @@ Persistência de dados utilizando SQL Server e o Entity Framework.
 
 Interface Swagger para auxílio do uso da API.
 
-Testes de integração da API utilizando xUnit.
+Testes de integração da API utilizando xUnit, simulando através de uma Factory a hospedagem da API.
 
 ### Tecnologias Utilizadas:
 * .NET
