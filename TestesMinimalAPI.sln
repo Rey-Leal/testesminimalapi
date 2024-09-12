@@ -5,7 +5,12 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalAPI", "MinimalAPI\MinimalAPI.csproj", "{E1BDFC52-51C0-4E30-8CF5-A6981E00C517}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinimalAPITestes", "MinimalAPITestes\MinimalAPITestes.csproj", "{7E7FE929-1AD6-4874-8D50-DFE24BF0AE0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalAPITestes", "MinimalAPITestes\MinimalAPITestes.csproj", "{7E7FE929-1AD6-4874-8D50-DFE24BF0AE0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2EFAD2EF-4EE6-402C-BE6D-1D0991CB5E35}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

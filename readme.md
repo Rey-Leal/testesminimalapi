@@ -8,12 +8,15 @@ Persistência de dados utilizando SQL Server e o Entity Framework.
 
 Interface Swagger para auxílio do uso da API.
 
+Testes de integração da API utilizando xUnit.
+
 ### Tecnologias Utilizadas:
 * .NET
 * API
 * JWT
 * Swagger
 * Entity Framework
+* xUnit
 
 ## Caminhos de Acesso aos Dados da API
 Os endpoints para acessar a API estarão disponíveis em:
