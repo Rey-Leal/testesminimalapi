@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
 
 using MinimalAPI.Data;
 using MinimalAPI.Models;
 using MinimalAPI.ViewModels;
-using Microsoft.IdentityModel.Tokens;
 
 namespace MinimalAPI.Controllers
 {
