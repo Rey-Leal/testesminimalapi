@@ -12,8 +12,7 @@ using MinimalAPI.ViewModels;
 
 namespace MinimalAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Route("api/[controller]")]
     [SwaggerTag("Endpoints relacionados à autenticação e geração de Token.")]
     public class AuthenticationController : ControllerBase
     {
@@ -56,7 +55,7 @@ namespace MinimalAPI.Controllers
                 {
                     ajuda = "Acesso via Swagger: informe o Token acima em [Authorize] com o seguinte formato:",
                     formato = "Bearer [space] {token}",
-                    token = tokenString                    
+                    token = tokenString
                 });
             }
             else
